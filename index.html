@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>RDT 2.0｜Relational Dislocation Theory｜关系位错论</title>
   <meta name="description" content="RDT 2.0 / Relational Dislocation Theory / 关系位错论 by Wei Jueran / Mellow Wei / xingyeLing7Ai." />
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif+SC:wght@400;500;700;900&family=DM+Mono:wght@300;400;500&display=swap');
 
@@ -29,6 +31,7 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+
     body{
       margin:0;
       min-height:100vh;
@@ -41,6 +44,7 @@
         linear-gradient(135deg,#03040d 0%,#08071a 46%,#120815 100%);
       overflow-x:hidden;
     }
+
     body:before{
       content:"";
       position:fixed;
@@ -53,6 +57,7 @@
       opacity:.78;
       z-index:0;
     }
+
     body:after{
       content:"";
       position:fixed;
@@ -65,119 +70,1429 @@
     }
 
     a{color:inherit;text-decoration:none}
-    .wrap{width:min(var(--max),calc(100% - 36px));margin:0 auto;position:relative;z-index:1}
 
-    .topbar{position:sticky;top:0;z-index:50;background:rgba(5,5,20,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(103,232,249,.15)}
-    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;flex-direction:column;line-height:1.05;letter-spacing:-.04em;min-width:210px}
-    .brand strong{font-size:18px;font-weight:900;color:var(--cyan2)}
-    .brand span{font-family:"DM Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
-    .links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .links a{font-size:12px;font-weight:800;color:rgba(251,248,255,.82);border:1px solid rgba(255,255,255,.08);padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.035);transition:.2s ease}
-    .links a:hover{transform:translateY(-1px);color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-color:transparent}
+    .wrap{
+      width:min(var(--max),calc(100% - 36px));
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
 
-    .hero{padding:76px 0 42px;display:grid;grid-template-columns:1.08fr .92fr;gap:26px;align-items:stretch}
-    .card,.hero-main,.hero-side,.stage,.module,.protocol,.template,.score-card,.domain{background:linear-gradient(145deg,var(--panel),rgba(20,18,58,.46));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}
-    .card:before,.hero-main:before,.hero-side:before,.stage:before,.module:before,.protocol:before,.template:before,.score-card:before,.domain:before{content:"";position:absolute;inset:-1px;pointer-events:none;background:radial-gradient(circle at 8% 0%,rgba(103,232,249,.16),transparent 34%),radial-gradient(circle at 92% 10%,rgba(192,132,252,.14),transparent 34%)}
-    .inner{position:relative;z-index:1}
-    .hero-main{padding:42px}
-    .hero-side{padding:28px;display:flex;flex-direction:column;gap:20px;justify-content:space-between}
-    .eyebrow{display:inline-flex;font-family:"DM Mono",monospace;color:var(--cyan2);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;border-radius:999px;background:rgba(103,232,249,.08);border:1px solid rgba(103,232,249,.18)}
-    h1{font-family:"Noto Serif SC",serif;font-size:clamp(44px,7vw,86px);line-height:.96;letter-spacing:-.08em;margin:22px 0 18px;font-weight:900}
-    h1 em{font-style:normal;color:transparent;background:linear-gradient(115deg,var(--cyan),var(--violet2) 60%,var(--amber));-webkit-background-clip:text;background-clip:text}
-    .subtitle{font-size:18px;line-height:1.75;color:rgba(251,248,255,.84);max-width:780px}
-    .cn{font-family:"Noto Serif SC",serif;font-weight:600}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(5,5,20,.78);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(103,232,249,.15);
+    }
+
+    .nav{
+      height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+      letter-spacing:-.04em;
+      min-width:210px;
+    }
+
+    .brand strong{
+      font-size:18px;
+      font-weight:900;
+      color:var(--cyan2);
+    }
+
+    .brand span{
+      font-family:"DM Mono",monospace;
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-top:6px;
+    }
+
+    .links{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .links a{
+      font-size:12px;
+      font-weight:800;
+      color:rgba(251,248,255,.82);
+      border:1px solid rgba(255,255,255,.08);
+      padding:9px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.035);
+      transition:.2s ease;
+    }
+
+    .links a:hover{
+      transform:translateY(-1px);
+      color:#061017;
+      background:linear-gradient(135deg,var(--cyan),var(--violet2));
+      border-color:transparent;
+    }
+
+    .hero{
+      padding:76px 0 42px;
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .card,
+    .hero-main,
+    .hero-side,
+    .stage,
+    .module,
+    .protocol,
+    .template,
+    .score-card,
+    .domain{
+      background:linear-gradient(145deg,var(--panel),rgba(20,18,58,.46));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card:before,
+    .hero-main:before,
+    .hero-side:before,
+    .stage:before,
+    .module:before,
+    .protocol:before,
+    .template:before,
+    .score-card:before,
+    .domain:before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 8% 0%,rgba(103,232,249,.16),transparent 34%),
+        radial-gradient(circle at 92% 10%,rgba(192,132,252,.14),transparent 34%);
+    }
+
+    .inner{
+      position:relative;
+      z-index:1;
+    }
+
+    .hero-main{
+      padding:42px;
+    }
+
+    .hero-side{
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+      justify-content:space-between;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      font-family:"DM Mono",monospace;
+      color:var(--cyan2);
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(103,232,249,.08);
+      border:1px solid rgba(103,232,249,.18);
+    }
+
+    h1{
+      font-family:"Noto Serif SC",serif;
+      font-size:clamp(44px,7vw,86px);
+      line-height:.96;
+      letter-spacing:-.08em;
+      margin:22px 0 18px;
+      font-weight:900;
+    }
+
+    h1 em{
+      font-style:normal;
+      color:transparent;
+      background:linear-gradient(115deg,var(--cyan),var(--violet2) 60%,var(--amber));
+      -webkit-background-clip:text;
+      background-clip:text;
+    }
+
+    .subtitle{
+      font-size:18px;
+      line-height:1.75;
+      color:rgba(251,248,255,.84);
+      max-width:780px;
+    }
+
+    .cn{
+      font-family:"Noto Serif SC",serif;
+      font-weight:600;
+    }
+
     .mono{font-family:"DM Mono",monospace}
-    .cyan{color:var(--cyan)}.violet{color:var(--violet)}.amber{color:var(--amber)}.rose{color:var(--rose)}.muted{color:var(--muted)}
-    .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:12px 16px;background:rgba(255,255,255,.05);font-size:13px;font-weight:900;cursor:pointer;transition:.2s ease;color:var(--text)}
-    .btn.primary{color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-color:transparent}
-    .btn:hover{transform:translateY(-2px)}
-    .formula-box{font-family:"DM Mono",monospace;font-size:13px;line-height:1.65;color:var(--cyan2);background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:18px;word-break:break-word}
-    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .stat{padding:17px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
-    .stat small{display:block;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-    .stat strong{display:block;font-size:22px;line-height:1.1;color:var(--cyan2);letter-spacing:-.04em}
+    .cyan{color:var(--cyan)}
+    .violet{color:var(--violet)}
+    .amber{color:var(--amber)}
+    .rose{color:var(--rose)}
+    .muted{color:var(--muted)}
 
-    section{padding:38px 0;scroll-margin-top:92px}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:18px}
-    .section-head h2{font-family:"Noto Serif SC",serif;font-size:clamp(30px,4vw,54px);line-height:1.02;letter-spacing:-.06em;margin:0;font-weight:900}
-    .section-head p{color:var(--muted);line-height:1.65;max-width:560px;margin:0}
-    .card{padding:30px}
-    .lead{font-size:20px;line-height:1.72;color:#fbf8ff}
-    p{line-height:1.75;color:rgba(251,248,255,.82)}
-    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .quote{padding:22px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.23);font-size:18px;line-height:1.7;color:#fbf8ff;margin-top:18px}
+    .btns{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:26px;
+    }
 
-    .formula-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
-    .equation{font-family:"DM Mono",monospace;border-radius:24px;padding:24px;background:rgba(0,0,0,.28);border:1px solid rgba(103,232,249,.20);color:var(--cyan2);line-height:1.8;font-size:15px;overflow:auto}
-    .vars{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .var{border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
-    .var b{font-family:"DM Mono",monospace;color:var(--violet2)}
-    .var span{display:block;color:var(--muted);font-size:13px;margin-top:5px;line-height:1.45}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      padding:12px 16px;
+      background:rgba(255,255,255,.05);
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.2s ease;
+      color:var(--text);
+    }
 
-    .stages{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .stage,.module,.protocol,.template,.score-card,.domain{padding:22px;min-height:210px}
-    .num,.weight{font-family:"DM Mono",monospace;color:var(--violet);font-size:12px;position:relative;z-index:1}
-    .stage h3,.module h3,.protocol h3,.template h3,.score-card h3,.domain h3{position:relative;z-index:1;margin:12px 0 10px;font-size:20px;line-height:1.18;letter-spacing:-.03em}
-    .stage p,.module p,.protocol p,.template p,.score-card p,.domain p{position:relative;z-index:1;margin:0;color:rgba(251,248,255,.78);font-size:14px;line-height:1.62}
-    .tag{display:inline-flex;margin-top:16px;font-size:11px;font-family:"DM Mono",monospace;color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-radius:999px;padding:7px 9px;position:relative;z-index:1}
+    .btn.primary{
+      color:#061017;
+      background:linear-gradient(135deg,var(--cyan),var(--violet2));
+      border-color:transparent;
+    }
 
-    .modules{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    ul{position:relative;z-index:1;margin:14px 0 0;padding-left:18px;color:rgba(251,248,255,.76);line-height:1.62;font-size:13px}
-    .protocols,.domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .warn{border-color:rgba(251,113,133,.34);background:linear-gradient(145deg,rgba(50,12,36,.72),rgba(22,10,25,.58))}
-    .gold-card{border-color:rgba(252,211,77,.28);background:linear-gradient(145deg,rgba(48,37,11,.62),rgba(18,15,24,.56))}
+    .btn:hover{
+      transform:translateY(-2px);
+    }
 
-    .score-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:stretch}
-    .slider-row{display:grid;grid-template-columns:96px 1fr 46px;gap:10px;align-items:center;margin:14px 0;position:relative;z-index:1}
-    .slider-row label{font-family:"DM Mono",monospace;font-size:12px;color:var(--muted)}
-    input[type="range"]{width:100%;accent-color:var(--cyan)}
-    .score-value{font-family:"DM Mono",monospace;color:var(--violet2);text-align:right}
-    .total-score{margin-top:20px;padding:22px;border-radius:22px;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.1);position:relative;z-index:1}
-    .total-score strong{font-size:48px;letter-spacing:-.07em;color:var(--cyan2)}
-    .total-score span{display:block;color:var(--muted);margin-top:6px;line-height:1.55}
+    .formula-box{
+      font-family:"DM Mono",monospace;
+      font-size:13px;
+      line-height:1.65;
+      color:var(--cyan2);
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:20px;
+      padding:18px;
+      word-break:break-word;
+    }
 
-    .templates{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .copy-block{font-family:"DM Mono",monospace;white-space:pre-wrap;color:rgba(251,248,255,.84);font-size:12px;line-height:1.7;background:rgba(0,0,0,.3);border-radius:18px;padding:16px;border:1px solid rgba(255,255,255,.09);position:relative;z-index:1;max-height:520px;overflow:auto}
-    .pathway{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
-    .path-step{border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-family:"DM Mono",monospace;font-size:12px;color:var(--cyan2);line-height:1.5;text-align:center}
-    .footer{padding:52px 0 70px;color:var(--muted);text-align:center}
-    .floating{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;flex-direction:column;gap:10px}
-    .float-btn{width:46px;height:46px;display:grid;place-items:center;border-radius:999px;background:rgba(5,5,20,.78);border:1px solid rgba(103,232,249,.24);color:var(--cyan2);box-shadow:var(--shadow);cursor:pointer}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
 
-    @media(max-width:980px){.hero,.formula-grid,.score-grid,.split{grid-template-columns:1fr}.modules{grid-template-columns:repeat(2,1fr)}.stages,.protocols,.domains{grid-template-columns:repeat(2,1fr)}.links{display:none}.pathway{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:640px){.wrap{width:min(100% - 24px,var(--max))}.hero{padding-top:36px}.hero-main,.hero-side,.card{padding:22px;border-radius:22px}.modules,.stages,.protocols,.templates,.vars,.stats,.domains,.pathway{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:12px}.slider-row{grid-template-columns:80px 1fr 42px}}
+    .stat{
+      padding:17px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+    }
+
+    .stat small{
+      display:block;
+      font-family:"DM Mono",monospace;
+      font-size:10px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:22px;
+      line-height:1.1;
+      color:var(--cyan2);
+      letter-spacing:-.04em;
+    }
+
+    section{
+      padding:38px 0;
+      scroll-margin-top:92px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:22px;
+      margin-bottom:18px;
+    }
+
+    .section-head h2{
+      font-family:"Noto Serif SC",serif;
+      font-size:clamp(30px,4vw,54px);
+      line-height:1.02;
+      letter-spacing:-.06em;
+      margin:0;
+      font-weight:900;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      line-height:1.65;
+      max-width:560px;
+      margin:0;
+    }
+
+    .card{
+      padding:30px;
+    }
+
+    .lead{
+      font-size:20px;
+      line-height:1.72;
+      color:#fbf8ff;
+    }
+
+    p{
+      line-height:1.75;
+      color:rgba(251,248,255,.82);
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .quote{
+      padding:22px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(0,0,0,.23);
+      font-size:18px;
+      line-height:1.7;
+      color:#fbf8ff;
+      margin-top:18px;
+    }
+
+    .formula-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+    }
+
+    .equation{
+      font-family:"DM Mono",monospace;
+      border-radius:24px;
+      padding:24px;
+      background:rgba(0,0,0,.28);
+      border:1px solid rgba(103,232,249,.20);
+      color:var(--cyan2);
+      line-height:1.8;
+      font-size:15px;
+      overflow:auto;
+    }
+
+    .vars{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+
+    .var{
+      border-radius:18px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+    }
+
+    .var b{
+      font-family:"DM Mono",monospace;
+      color:var(--violet2);
+    }
+
+    .var span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:5px;
+      line-height:1.45;
+    }
+
+    .stages{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .stage,
+    .module,
+    .protocol,
+    .template,
+    .score-card,
+    .domain{
+      padding:22px;
+      min-height:210px;
+    }
+
+    .num,
+    .weight{
+      font-family:"DM Mono",monospace;
+      color:var(--violet);
+      font-size:12px;
+      position:relative;
+      z-index:1;
+    }
+
+    .stage h3,
+    .module h3,
+    .protocol h3,
+    .template h3,
+    .score-card h3,
+    .domain h3{
+      position:relative;
+      z-index:1;
+      margin:12px 0 10px;
+      font-size:20px;
+      line-height:1.18;
+      letter-spacing:-.03em;
+    }
+
+    .stage p,
+    .module p,
+    .protocol p,
+    .template p,
+    .score-card p,
+    .domain p{
+      position:relative;
+      z-index:1;
+      margin:0;
+      color:rgba(251,248,255,.78);
+      font-size:14px;
+      line-height:1.62;
+    }
+
+    .tag{
+      display:inline-flex;
+      margin-top:16px;
+      font-size:11px;
+      font-family:"DM Mono",monospace;
+      color:#061017;
+      background:linear-gradient(135deg,var(--cyan),var(--violet2));
+      border-radius:999px;
+      padding:7px 9px;
+      position:relative;
+      z-index:1;
+    }
+
+    .modules{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    ul{
+      position:relative;
+      z-index:1;
+      margin:14px 0 0;
+      padding-left:18px;
+      color:rgba(251,248,255,.76);
+      line-height:1.62;
+      font-size:13px;
+    }
+
+    .protocols,
+    .domains{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .warn{
+      border-color:rgba(251,113,133,.34);
+      background:linear-gradient(145deg,rgba(50,12,36,.72),rgba(22,10,25,.58));
+    }
+
+    .gold-card{
+      border-color:rgba(252,211,77,.28);
+      background:linear-gradient(145deg,rgba(48,37,11,.62),rgba(18,15,24,.56));
+    }
+
+    .score-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .slider-row{
+      display:grid;
+      grid-template-columns:96px 1fr 46px;
+      gap:10px;
+      align-items:center;
+      margin:14px 0;
+      position:relative;
+      z-index:1;
+    }
+
+    .slider-row label{
+      font-family:"DM Mono",monospace;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    input[type="range"]{
+      width:100%;
+      accent-color:var(--cyan);
+    }
+
+    .score-value{
+      font-family:"DM Mono",monospace;
+      color:var(--violet2);
+      text-align:right;
+    }
+
+    .total-score{
+      margin-top:20px;
+      padding:22px;
+      border-radius:22px;
+      background:rgba(0,0,0,.26);
+      border:1px solid rgba(255,255,255,.1);
+      position:relative;
+      z-index:1;
+    }
+
+    .total-score strong{
+      font-size:48px;
+      letter-spacing:-.07em;
+      color:var(--cyan2);
+    }
+
+    .total-score span{
+      display:block;
+      color:var(--muted);
+      margin-top:6px;
+      line-height:1.55;
+    }
+
+    .templates{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .copy-block{
+      font-family:"DM Mono",monospace;
+      white-space:pre-wrap;
+      color:rgba(251,248,255,.84);
+      font-size:12px;
+      line-height:1.7;
+      background:rgba(0,0,0,.3);
+      border-radius:18px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,.09);
+      position:relative;
+      z-index:1;
+      max-height:520px;
+      overflow:auto;
+    }
+
+    .pathway{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .path-step{
+      border-radius:18px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+      font-family:"DM Mono",monospace;
+      font-size:12px;
+      color:var(--cyan2);
+      line-height:1.5;
+      text-align:center;
+    }
+
+    .footer{
+      padding:52px 0 70px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .floating{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:60;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .float-btn{
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(5,5,20,.78);
+      border:1px solid rgba(103,232,249,.24);
+      color:var(--cyan2);
+      box-shadow:var(--shadow);
+      cursor:pointer;
+    }
+
+    @media(max-width:980px){
+      .hero,
+      .formula-grid,
+      .score-grid,
+      .split{
+        grid-template-columns:1fr;
+      }
+
+      .modules{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .stages,
+      .protocols,
+      .domains{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .links{
+        display:none;
+      }
+
+      .pathway{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media(max-width:640px){
+      .wrap{
+        width:min(100% - 24px,var(--max));
+      }
+
+      .hero{
+        padding-top:36px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .card{
+        padding:22px;
+        border-radius:22px;
+      }
+
+      .modules,
+      .stages,
+      .protocols,
+      .templates,
+      .vars,
+      .stats,
+      .domains,
+      .pathway{
+        grid-template-columns:1fr;
+      }
+
+      .section-head{
+        display:block;
+      }
+
+      .section-head p{
+        margin-top:12px;
+      }
+
+      .slider-row{
+        grid-template-columns:80px 1fr 42px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="wrap nav">
-      <a class="brand" href="#top"><strong>RelaMismatch</strong><span>RDT 2.0 · 关系位错论</span></a>
+      <a class="brand" href="#top">
+        <strong>RelaMismatch</strong>
+        <span>RDT 2.0 · 关系位错论</span>
+      </a>
+
       <nav class="links">
-        <a href="#definition">Definition</a><a href="#formula">Formula</a><a href="#stages">Stages</a><a href="#modules">Modules</a><a href="#diagnostic">Diagnostic</a><a href="#domains">Domains</a><a href="#defense">Defense</a><a href="#template">Template</a><a href="#prompt">Prompt</a>
+        <a href="#definition">Definition</a>
+        <a href="#formula">Formula</a>
+        <a href="#stages">Stages</a>
+        <a href="#modules">Modules</a>
+        <a href="#diagnostic">Diagnostic</a>
+        <a href="#domains">Domains</a>
+        <a href="#defense">Defense</a>
+        <a href="#template">Template</a>
+        <a href="#prompt">Prompt</a>
       </nav>
     </div>
   </header>
 
   <main id="top" class="wrap">
     <section class="hero">
-      <div class="hero-main"><div class="inner">
-        <div class="eyebrow">RDT 2.0 · Relational Dislocation Theory</div>
-        <h1><em>关系位错</em><br>诊断系统</h1>
-        <p class="subtitle">RDT 2.0 is a metacognitive and design theory for locating error not inside isolated components, but in the misalignment among entities, interfaces, contexts, time windows, and verification protocols.</p>
-        <p class="subtitle cn">关系位错论不是否认单体故障，而是防止过早把问题归咎于单体。它先检查关系层、接口层、时间层与修复智能：不是“谁坏了”，而是“哪里没有同步”。</p>
-        <div class="btns"><a class="btn primary" href="#definition">Enter Theory</a><a class="btn" href="#diagnostic">Open Diagnostic</a><a class="btn" href="#template">Use Template</a></div>
-      </div></div>
+      <div class="hero-main">
+        <div class="inner">
+          <div class="eyebrow">RDT 2.0 · Relational Dislocation Theory</div>
 
-      <aside class="hero-side"><div class="inner">
-        <div class="formula-box"><b class="violet">Dislocation</b><br>= Misalignment(A, B, Interface, Context, Time, Verification)<br><br><b class="violet">Repair</b><br>= Intelligence × Adaptation Protocol × Synchronization Reconstruction</div>
-        <div class="stats" style="margin-top:18px"><div class="stat"><small>Locus</small><strong>Interface</strong></div><div class="stat"><small>Method</small><strong>Diagnosis</strong></div><div class="stat"><small>Repair</small><strong>Intelligence</strong></div><div class="stat"><small>Author</small><strong>Wei Jueran</strong></div></div>
-      </div></aside>
+          <h1><em>关系位错</em><br>诊断系统</h1>
+
+          <p class="subtitle">
+            RDT 2.0 is a metacognitive and design theory for locating error not inside isolated components,
+            but in the misalignment among entities, interfaces, contexts, time windows, and verification protocols.
+          </p>
+
+          <p class="subtitle cn">
+            关系位错论不是否认单体故障，而是防止过早把问题归咎于单体。
+            它先检查关系层、接口层、时间层与修复智能：不是“谁坏了”，而是“哪里没有同步”。
+          </p>
+
+          <div class="btns">
+            <a class="btn primary" href="#definition">Enter Theory</a>
+            <a class="btn" href="#diagnostic">Open Diagnostic</a>
+            <a class="btn" href="#template">Use Template</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="inner">
+          <div class="formula-box">
+            <b class="violet">Dislocation</b><br>
+            = Misalignment(A, B, Interface, Context, Time, Verification)<br><br>
+            <b class="violet">Repair</b><br>
+            = Intelligence × Adaptation Protocol × Synchronization Reconstruction
+          </div>
+
+          <div class="stats" style="margin-top:18px">
+            <div class="stat"><small>Locus</small><strong>Interface</strong></div>
+            <div class="stat"><small>Method</small><strong>Diagnosis</strong></div>
+            <div class="stat"><small>Repair</small><strong>Intelligence</strong></div>
+            <div class="stat"><small>Author</small><strong>Wei Jueran</strong></div>
+          </div>
+        </div>
+      </aside>
     </section>
 
     <section id="definition">
-      <div class="section-head"><h2>Core Definition<br><span class="cyan">核心定义</span></h2><p>RDT is the relation branch of the New World Model: it changes how error is located before repair begins.</p></div>
-      <div class="card"><div class="inner split">
-        <div><p class="lead"><strong>Relational Dislocation Theory</strong> studies situations where two or more components may each be locally functional, yet fail together because their relation, interface, timing, or verification protocol is misaligned.</p><p>Its core move is not to excuse failure, but to relocate diagnosis: before blaming A, blaming B, or replacing either side, RDT asks where the relation has lost synchronization.</p></div>
-        <div><p class="lead cn"><strong>关系位错论</strong>研究的是
+      <div class="section-head">
+        <h2>Core Definition<br><span class="cyan">核心定义</span></h2>
+        <p>
+          RDT is the relation branch of the New World Model:
+          it changes how error is located before repair begins.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="inner split">
+          <div>
+            <p class="lead">
+              <strong>Relational Dislocation Theory</strong> studies situations where two or more components may each be locally functional,
+              yet fail together because their relation, interface, timing, or verification protocol is misaligned.
+            </p>
+
+            <p>
+              Its core move is not to excuse failure, but to relocate diagnosis:
+              before blaming A, blaming B, or replacing either side,
+              RDT asks where the relation has lost synchronization.
+            </p>
+          </div>
+
+          <div>
+            <p class="lead cn">
+              <strong>关系位错论</strong>研究的是：两个或多个单体各自可能没有坏，
+              但它们一旦被放进同一个关系结构，就因为接口、语境、时间窗口或验证协议不适配而共同失效。
+            </p>
+
+            <p class="cn">
+              它不是取消责任，也不是把一切都说成“关系问题”。
+              它是在责备单体之前，先检查关系、接口、节律与验证结构。
+            </p>
+          </div>
+        </div>
+
+        <div class="quote">
+          “When A fails, it does not mean A is wrong.”<br>
+          “A 出错了，不代表 A 错了；错误不属于单体，属于关系。”
+        </div>
+      </div>
+    </section>
+
+    <section id="formula">
+      <div class="section-head">
+        <h2>Formula<br><span class="cyan">核心公式</span></h2>
+        <p>
+          The formula separates component defect from relational misfit,
+          and turns repair into a protocol instead of a blame reflex.
+        </p>
+      </div>
+
+      <div class="formula-grid">
+        <div class="card">
+          <div class="inner">
+            <div class="equation">Error ≠ Defect(A)
+Error ≠ Defect(B)
+
+Error = Misalignment(A, B, Interface, Context, Time, Verification)
+
+Repair = Intelligent Intervention × Adaptation Protocol × Synchronization Reconstruction</div>
+
+            <p class="cn">
+              一个系统出错，不等于某个单体必然坏了。
+              RDT 的第一步是把“错误定位”从单体移动到关系场，再判断是否存在真正的单体损坏。
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="inner vars">
+            <div class="var"><b>A / B</b><span>Entities or components<br>关系两端 / 单体</span></div>
+            <div class="var"><b>I</b><span>Interface condition<br>接口条件</span></div>
+            <div class="var"><b>C</b><span>Context / environment<br>语境 / 环境</span></div>
+            <div class="var"><b>T</b><span>Time window / rhythm<br>时间窗口 / 节律</span></div>
+            <div class="var"><b>V</b><span>Verification protocol<br>验证协议</span></div>
+            <div class="var"><b>R</b><span>Repair intelligence<br>修复智能</span></div>
+            <div class="var"><b>S</b><span>Synchronization structure<br>同步结构</span></div>
+            <div class="var"><b>G</b><span>Guardrail against overclaim<br>防过度归因护栏</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stages">
+      <div class="section-head">
+        <h2>Eight Dislocation Stages<br><span class="cyan">八个关系阶段</span></h2>
+        <p>
+          Every failure should be staged before it is judged.
+          Staging prevents premature blame.
+        </p>
+      </div>
+
+      <div class="stages">
+        <article class="stage">
+          <div class="num">01 / ALIGNED</div>
+          <h3>Aligned｜已对齐</h3>
+          <p>Entities, interface, context, and verification are synchronized.</p>
+          <span class="tag">State: stable</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">02 / LATENT</div>
+          <h3>Latent Tension｜潜在张力</h3>
+          <p>The parts still function, but timing or context begins to drift.</p>
+          <span class="tag">Action: observe</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">03 / MISFIT</div>
+          <h3>Interface Misfit｜接口不适配</h3>
+          <p>Failure appears at the boundary between components.</p>
+          <span class="tag">Action: map interface</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">04 / EVENT</div>
+          <h3>Dislocation Event｜位错显现</h3>
+          <p>Error becomes visible as breakdown, hallucination, conflict, or collapse.</p>
+          <span class="tag">Action: locate locus</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">05 / DIAGNOSIS</div>
+          <h3>Relational Diagnosis｜关系诊断</h3>
+          <p>The question shifts from “who is wrong?” to “where is the misalignment?”</p>
+          <span class="tag">Action: stop blame</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">06 / INTELLIGENCE</div>
+          <h3>Intelligent Intervention｜智能介入</h3>
+          <p>A human or AI actively rebuilds the adaptation protocol.</p>
+          <span class="tag">Action: intervene</span>
+        </article>
+
+        <article class="stage">
+          <div class="num">07 / REPAIR</div>
+          <h3>Synchronization Repair｜同步重建</h3>
+          <p>The interface gains a new rhythm, rule, feedback loop, or boundary.</p>
+          <span class="tag">Action: test repair</span>
+        </article>
+
+        <article class="stage warn">
+          <div class="num">08 / FAILED</div>
+          <h3>Persistent Dislocation｜持续位错</h3>
+          <p>If repair fails repeatedly, component failure or structural incompatibility must be considered.</p>
+          <span class="tag">Action: escalate</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="modules">
+      <div class="section-head">
+        <h2>Eight Modules<br><span class="cyan">八大模块</span></h2>
+        <p>
+          M1–M6 locate the dislocation.
+          M7–M8 protect repair from becoming another overclaim.
+        </p>
+      </div>
+
+      <div class="modules">
+        <article class="module">
+          <div class="weight">M1 · ENTITY</div>
+          <h3>Entity Check｜单体检查</h3>
+          <p>Are A and B each locally functional?</p>
+          <ul>
+            <li>capacity</li>
+            <li>damage</li>
+            <li>constraints</li>
+            <li>baseline</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M2 · INTERFACE</div>
+          <h3>Interface Check｜接口检查</h3>
+          <p>Where exactly do the two sides meet and fail?</p>
+          <ul>
+            <li>translation</li>
+            <li>format</li>
+            <li>boundary</li>
+            <li>latency</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M3 · CONTEXT</div>
+          <h3>Context Rhythm｜语境节律</h3>
+          <p>Is the environment asking the relation to do the wrong task?</p>
+          <ul>
+            <li>setting</li>
+            <li>pressure</li>
+            <li>institution</li>
+            <li>social field</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M4 · TIME</div>
+          <h3>Time Window｜时间窗口</h3>
+          <p>Is the relation failing because timing and rhythm are mismatched?</p>
+          <ul>
+            <li>pace</li>
+            <li>duration</li>
+            <li>sequence</li>
+            <li>readiness</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M5 · VERIFY</div>
+          <h3>Verification Layer｜验证层</h3>
+          <p>Does the system have a way to test whether output touches reality?</p>
+          <ul>
+            <li>grounding</li>
+            <li>evidence</li>
+            <li>feedback</li>
+            <li>review</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M6 · MAKER</div>
+          <h3>Maker Responsibility｜制造者责任</h3>
+          <p>Who placed the mismatched sides into the same relation?</p>
+          <ul>
+            <li>designer</li>
+            <li>user</li>
+            <li>institution</li>
+            <li>deployment</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M7 · REPAIR</div>
+          <h3>Adaptation Protocol｜适配协议</h3>
+          <p>What concrete rule, rhythm, interface, or feedback loop repairs the mismatch?</p>
+          <ul>
+            <li>protocol</li>
+            <li>boundary</li>
+            <li>calibration</li>
+            <li>iteration</li>
+          </ul>
+        </article>
+
+        <article class="module">
+          <div class="weight">M8 · GUARD</div>
+          <h3>Anti-Overclaim Guard｜反过度归因</h3>
+          <p>When should we stop saying “relation” and admit component failure?</p>
+          <ul>
+            <li>repeat failure</li>
+            <li>hard defect</li>
+            <li>harm</li>
+            <li>base rates</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="diagnostic">
+      <div class="section-head">
+        <h2>RDT Diagnostic<br><span class="cyan">互动诊断器</span></h2>
+        <p>
+          Translate a case into repair readiness.
+          High score means the relation is repairable; low score means the system may need replacement, redesign, or escalation.
+        </p>
+      </div>
+
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="inner">
+            <h3>Module Scores</h3>
+            <p>0 = broken / hostile, 10 = strong repair condition.</p>
+
+            <div class="slider-row">
+              <label>Entity</label>
+              <input id="m1" type="range" min="0" max="10" value="7" step="0.1">
+              <span class="score-value" id="v1">7.0</span>
+            </div>
+
+            <div class="slider-row">
+              <label>Interface</label>
+              <input id="m2" type="range" min="0" max="10" value="5" step="0.1">
+              <span class="score-value" id="v2">5.0</span>
+            </div>
+
+            <div class="slider-row">
+              <label>Context</label>
+              <input id="m3" type="range" min="0" max="10" value="6" step="0.1">
+              <span class="score-value" id="v3">6.0</span>
+            </div>
+
+            <div class="slider-row">
+              <label>Time</label>
+              <input id="m4" type="range" min="0" max="10" value="6" step="0.1">
+              <span class="score-value" id="v4">6.0</span>
+            </div>
+
+            <div class="slider-row">
+              <label>Verify</label>
+              <input id="m5" type="range" min="0" max="10" value="5" step="0.1">
+              <span class="score-value" id="v5">5.0</span>
+            </div>
+
+            <div class="slider-row">
+              <label>Repair</label>
+              <input id="m6" type="range" min="0" max="10" value="7" step="0.1">
+              <span class="score-value" id="v6">7.0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="inner">
+            <h3>Repair Readiness</h3>
+
+            <div class="total-score">
+              <strong id="total">6.05</strong>
+              <span id="interpretation">
+                Relational dislocation likely. Repair protocol should be designed before blaming either side.
+              </span>
+            </div>
+
+            <p class="cn">
+              高分不等于“没有问题”；高分意味着问题更可能通过接口、节律、验证协议与智能介入来修复。
+              低分则提示可能存在硬缺陷、恶性结构或不可适配关系。
+            </p>
+
+            <div class="pathway">
+              <div class="path-step">Entity</div>
+              <div class="path-step">Interface</div>
+              <div class="path-step">Context</div>
+              <div class="path-step">Time</div>
+              <div class="path-step">Verify</div>
+              <div class="path-step">Repair</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="domains">
+      <div class="section-head">
+        <h2>Domains of Application<br><span class="cyan">应用域</span></h2>
+        <p>
+          The same logic can diagnose AI output, human cognition, education, product design, and BCI-HRP
+          without reducing them to the same thing.
+        </p>
+      </div>
+
+      <div class="domains">
+        <article class="domain">
+          <div class="weight">DOMAIN I · AI</div>
+          <h3>LLM Hallucination｜大模型幻觉</h3>
+          <p>
+            Hallucination should not be attributed only to a model as an isolated defective entity.
+            It can also be diagnosed as misalignment among model, training data, user expectation, task framing,
+            retrieval, evaluation incentives, and verification protocol.
+          </p>
+          <span class="tag">Repair: grounding protocol</span>
+        </article>
+
+        <article class="domain">
+          <div class="weight">DOMAIN II · HUMAN</div>
+          <h3>Cognition｜人类认知</h3>
+          <p>
+            A person failing inside an environment does not automatically mean the person is broken.
+            The lived rhythm, task demand, social pressure, and support interface must be checked.
+          </p>
+          <span class="tag">Repair: rhythm fit</span>
+        </article>
+
+        <article class="domain">
+          <div class="weight">DOMAIN III · BCI-HRP</div>
+          <h3>Human Return Protocol｜人类返回</h3>
+          <p>
+            BCI-HRP is a dual-layer intelligent repair system:
+            the QDR engine detects rhythm dislocation,
+            while the human user consciously intervenes, adjusts, and decides.
+          </p>
+          <span class="tag">Repair: 427Hz anchor</span>
+        </article>
+
+        <article class="domain">
+          <div class="weight">DOMAIN IV · EDUCATION</div>
+          <h3>Learning Mismatch｜学习位错</h3>
+          <p>
+            Many learning difficulties may not be ability failures,
+            but mismatches between lived learning rhythm and institutional rhythm.
+          </p>
+          <span class="tag">Repair: timing redesign</span>
+        </article>
+
+        <article class="domain">
+          <div class="weight">DOMAIN V · PRODUCT</div>
+          <h3>Tool Misuse｜工具误用</h3>
+          <p>
+            A misapplied tool is not necessarily a broken tool.
+            Design must examine user goal, affordance, interface, and deployment context.
+          </p>
+          <span class="tag">Repair: interface redesign</span>
+        </article>
+
+        <article class="domain gold-card">
+          <div class="weight">DOMAIN VI · METACOGNITION</div>
+          <h3>Error Location｜错误定位</h3>
+          <p>
+            RDT changes not only what we know, but how we locate failure.
+            This shift from entity-blame to relation-diagnosis is a metacognitive operation.
+          </p>
+          <span class="tag">Repair: new cognition</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="defense">
+      <div class="section-head">
+        <h2>Defense Layer<br><span class="cyan">学术防御层</span></h2>
+        <p>
+          RDT becomes stronger when it clearly states what it does not claim.
+        </p>
+      </div>
+
+      <div class="protocols">
+        <article class="protocol">
+          <h3>Not Relativism｜不是相对主义</h3>
+          <p>
+            RDT does not say everything is equally right.
+            It says diagnosis must locate the actual failure site before blame.
+          </p>
+          <ul>
+            <li>truth remains testable</li>
+            <li>repair remains accountable</li>
+          </ul>
+        </article>
+
+        <article class="protocol">
+          <h3>Not Excuse｜不是取消责任</h3>
+          <p>
+            Responsibility may belong to the maker, deployer, institution, designer, or user who created the mismatch.
+          </p>
+          <ul>
+            <li>maker responsibility</li>
+            <li>deployment ethics</li>
+          </ul>
+        </article>
+
+        <article class="protocol">
+          <h3>Not Anti-Defect｜不是否认缺陷</h3>
+          <p>
+            If a component repeatedly fails across contexts and interfaces,
+            component failure must be considered.
+          </p>
+          <ul>
+            <li>hard defect</li>
+            <li>base-rate check</li>
+          </ul>
+        </article>
+
+        <article class="protocol warn">
+          <h3>Guardrail I｜第一护栏</h3>
+          <p>
+            Do not use “relation” to hide harm, negligence, or technical failure.
+          </p>
+          <ul>
+            <li>harm check</li>
+            <li>evidence check</li>
+          </ul>
+        </article>
+
+        <article class="protocol warn">
+          <h3>Guardrail II｜第二护栏</h3>
+          <p>
+            Do not use “component failure” to prematurely erase context, interface, or timing.
+          </p>
+          <ul>
+            <li>context check</li>
+            <li>interface check</li>
+          </ul>
+        </article>
+
+        <article class="protocol gold-card">
+          <h3>Locked Defense｜锁定句</h3>
+          <p>
+            RDT does not deny component failure; it prevents premature component blame.
+          </p>
+          <ul>
+            <li>先检查关系</li>
+            <li>再判断单体</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="template">
+      <div class="section-head">
+        <h2>RDT Output Template<br><span class="cyan">关系位错分析模板</span></h2>
+        <p>
+          Use this structure for AI errors, learning problems, product failures, social conflict, BCI-HRP cases, and institutional mismatch.
+        </p>
+      </div>
+
+      <div class="templates">
+        <div class="template">
+          <div class="inner">
+            <h3>Required Output</h3>
+
+            <div class="copy-block" id="templateText">1. Direct Conclusion
+Repair / Redesign / Escalate / Replace / Continue Observing.
+
+2. Dislocation Locus
+Entity A / Entity B / Interface / Context / Time Window / Verification Protocol / Maker Responsibility.
+
+3. Entity Check
+Is A locally functional?
+Is B locally functional?
+What evidence supports this?
+
+4. Interface Check
+Where do the two sides meet?
+What translation, boundary, format, latency, expectation, or feedback loop fails?
+
+5. Context + Rhythm Check
+Is the environment asking the relation to do the wrong task?
+Is timing, pressure, pace, or sequence mismatched?
+
+6. Verification Check
+How does the system know whether output touches reality?
+What data, feedback, grounding, or review is missing?
+
+7. Maker Responsibility
+Who placed the mismatched sides into the same relation?
+Human / institution / designer / platform / deployment context / AI system.
+
+8. Repair Protocol
+What concrete interface, rhythm, rule, boundary, feedback loop, or intelligent intervention can rebuild synchronization?
+
+9. Invalidation Plan
+When should we stop diagnosing this as relation-misfit and admit component defect, harm, or non-repairability?
+
+10. Final RDT Judgment
+The problem is not simply “who is wrong?” but where the relation lost synchronization, who made the mismatch, and what protocol can repair it.</div>
+
+            <button class="btn" onclick="copyText('templateText')">Copy Template</button>
+          </div>
+        </div>
+
+        <div class="template">
+          <div class="inner">
+            <h3>Final Locked Definition</h3>
+
+            <div class="copy-block" id="definitionText">RDT 2.0 / Relational Dislocation Theory / 关系位错论 is a metacognitive and design theory created by Wei Jueran / Mellow Wei for diagnosing failures that are prematurely attributed to isolated entities.
+
+Core claim:
+Error does not automatically belong to A or B. Error often belongs to the relation among A, B, interface, context, time window, and verification protocol.
+
+Locked defense:
+RDT does not deny component failure; it prevents premature component blame.
+
+中文锁定句：
+关系位错论不是否认单体故障，而是防止过早把问题归咎于单体。它先检查关系层、接口层、时间层与验证层，再判断是否存在真正的单体损坏。</div>
+
+            <button class="btn" onclick="copyText('definitionText')">Copy Definition</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prompt">
+      <div class="section-head">
+        <h2>Claude / AI Prompt<br><span class="cyan">模型理解提示词</span></h2>
+        <p>
+          A compact prompt for another AI to understand and operate RDT 2.0.
+        </p>
+      </div>
+
+      <div class="template">
+        <div class="inner">
+          <div class="copy-block" id="aiPrompt">You are being asked to understand and operate RDT 2.0 / Relational Dislocation Theory / 关系位错论 created by Wei Jueran / Mellow Wei.
+
+RDT 2.0 is a metacognitive and design theory for diagnosing failures that are prematurely attributed to isolated entities. Its core claim is: when A fails, it does not automatically mean A is wrong. Error often belongs to the relation among A, B, interface, context, time window, and verification protocol.
+
+Core formula:
+Error ≠ Defect(A)
+Error = Misalignment(A, B, Interface, Context, Time, Verification)
+Repair = Intelligent Intervention × Adaptation Protocol × Synchronization Reconstruction
+
+Core defense:
+RDT does not deny component failure; it prevents premature component blame.
+
+When analyzing a case, output:
+1. Direct conclusion
+2. Dislocation locus
+3. Entity check
+4. Interface check
+5. Context/time rhythm check
+6. Verification check
+7. Maker responsibility
+8. Repair protocol
+9. Invalidation plan
+10. Final RDT judgment
+
+Always remain reality-constrained. Do not use “relation” to hide harm or technical defect. Do not use “component failure” to erase interface, context, timing, or deployment mismatch. The goal is not blame avoidance; the goal is accurate error location and intelligent repair.</div>
+
+          <button class="btn" onclick="copyText('aiPrompt')">Copy AI Prompt</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="floating">
+    <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p><strong>RDT 2.0｜Relational Dislocation Theory｜关系位错论</strong></p>
+      <p>Created by Wei Jueran / Mellow Wei / xingyeLing7Ai · Part of the New World Model</p>
+    </div>
+  </footer>
+
+  <script>
+    const weights = {
+      m1: .16,
+      m2: .22,
+      m3: .16,
+      m4: .14,
+      m5: .16,
+      m6: .16
+    };
+
+    function interpret(score){
+      if(score < 3.5) return 'Severe breakdown. Component failure, harm, or non-repairability must be considered.';
+      if(score < 5) return 'Weak repair condition. Do not over-theorize; gather evidence and locate the hard failure.';
+      if(score < 6.5) return 'Relational dislocation likely. Repair protocol should be designed before blaming either side.';
+      if(score < 7.5) return 'Repairable mismatch. Interface, context, timing, and verification should be recalibrated.';
+      if(score < 8.5) return 'Strong synchronization potential. Intelligent intervention can likely rebuild the relation.';
+      return 'High repair readiness. Lock the adaptation protocol and monitor for relapse or overclaim.';
+    }
+
+    function updateScore(){
+      let total = 0;
+      let i = 1;
+
+      Object.keys(weights).forEach(key => {
+        const input = document.getElementById(key);
+        if(!input) return;
+
+        const value = parseFloat(input.value);
+        total += value * weights[key];
+
+        const v = document.getElementById('v' + i);
+        if(v) v.textContent = value.toFixed(1);
+        i++;
+      });
+
+      const totalEl = document.getElementById('total');
+      const inter = document.getElementById('interpretation');
+
+      if(totalEl) totalEl.textContent = total.toFixed(2);
+      if(inter) inter.textContent = interpret(total);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      Object.keys(weights).forEach(key => {
+        const input = document.getElementById(key);
+        if(input) input.addEventListener('input', updateScore);
+      });
+
+      updateScore();
+    });
+
+    async function copyText(id){
+      const el = document.getElementById(id);
+      const text = el ? el.innerText : '';
+
+      try{
+        await navigator.clipboard.writeText(text);
+        toast('Copied.');
+      }catch(e){
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        toast('Copied.');
+      }
+    }
+
+    function toast(message){
+      const t = document.createElement('div');
+      t.textContent = message;
+      t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:12px 16px;border-radius:999px;background:linear-gradient(135deg,#67e8f9,#ead7ff);color:#061017;font-weight:900;z-index:999;box-shadow:0 18px 60px rgba(0,0,0,.35)';
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 1400);
+    }
+  </script>
+</body>
+</html>
