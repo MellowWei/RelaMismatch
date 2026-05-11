@@ -1,1057 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>关系位错论 / Relational Dislocation Theory</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Share+Tech+Mono&family=Cinzel:wght@400;600&display=swap');
-
-:root {
-  --bg:         #080400;
-  --bg2:        #110700;
-  --amber:      #e8a020;
-  --amber2:     #ffc84a;
-  --amber-dim:  #6a4a10;
-  --amber-glow: rgba(232,160,32,0.2);
-  --red:        #c83010;
-  --red2:       #e84820;
-  --red-glow:   rgba(200,48,16,0.25);
-  --cream:      #f0d898;
-  --cream-dim:  #987840;
-  --mono:       'Share Tech Mono', monospace;
-  --serif-cn:   'Noto Serif SC', serif;
-  --serif-en:   'Cormorant Garamond', serif;
-  --cinzel:     'Cinzel', serif;
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--cream-dim);
-  font-family: var(--serif-cn);
-  font-weight: 300;
-  overflow-x: hidden;
-}
-
-/* SCANLINES */
-.scanlines {
-  position: fixed; inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    rgba(232,160,32,0.025) 3px,
-    rgba(232,160,32,0.025) 4px
-  );
-  pointer-events: none;
-  z-index: 9000;
-}
-
-/* VIGNETTE */
-.vignette {
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 35%, rgba(4,2,0,0.88) 100%);
-  pointer-events: none;
-  z-index: 8999;
-}
-
-/* CANVAS */
-#cv { position:fixed; inset:0; pointer-events:none; z-index:0; }
-
-/* NAV */
-nav {
-  position: fixed; top:0; left:0; right:0;
-  z-index: 5000;
-  display: flex; align-items:center; justify-content:space-between;
-  padding: 16px 48px;
-  background: linear-gradient(to bottom, rgba(8,4,0,0.97) 60%, transparent);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  border-bottom: 1px solid rgba(232,160,32,0.1);
-}
-.nav-logo { color:var(--amber); text-shadow: 0 0 12px var(--amber); }
-.nav-links { display:flex; gap:28px; }
-.nav-links a {
-  color: var(--amber-dim);
-  text-decoration: none;
-  transition: color 0.3s, text-shadow 0.3s;
-}
-.nav-links a:hover {
-  color: var(--amber2);
-  text-shadow: 0 0 8px var(--amber);
-}
-
-/* COVER */
-#cover {
-  position: relative; z-index: 2;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 120px 48px 100px;
-  overflow: hidden;
-}
-
-.cover-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(232,160,32,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232,160,32,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-}
-
-.cover-grid::after {
-  content:'';
-  position:absolute; inset:0;
-  background: radial-gradient(ellipse at center, transparent 20%, var(--bg) 80%);
-}
-
-.cover-glow {
-  position: absolute;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(232,160,32,0.1) 0%, transparent 65%);
-  border-radius: 50%;
-  animation: breathe 7s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.cover-glow2 {
-  position: absolute;
-  width: 400px; height: 300px;
-  background: radial-gradient(ellipse, rgba(200,48,16,0.08) 0%, transparent 70%);
-  bottom: 20%;
-  animation: breathe 9s ease-in-out infinite reverse;
-  pointer-events: none;
-}
-
-@keyframes breathe {
-  0%,100% { transform:scale(1); opacity:0.7; }
-  50% { transform:scale(1.2); opacity:1; }
-}
-
-.cover-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  color: var(--amber-dim);
-  margin-bottom: 48px;
-  opacity: 0;
-  animation: fadeUp 1.5s ease forwards 0.3s;
-}
-
-.cover-tag span { color: var(--red); }
-
-.cover-title {
-  font-family: var(--serif-cn);
-  font-weight: 900;
-  font-size: clamp(56px, 11vw, 120px);
-  color: var(--amber2);
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-shadow:
-    0 0 40px rgba(232,160,32,0.6),
-    0 0 80px rgba(232,160,32,0.3),
-    0 0 160px rgba(232,160,32,0.1);
-  opacity: 0;
-  animation: fadeUp 1.5s ease forwards 0.7s;
-  position: relative;
-}
-
-.cover-title::after {
-  content: attr(data-text);
-  position: absolute; inset:0;
-  color: var(--red2);
-  text-shadow: 0 0 30px var(--red-glow);
-  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
-  animation: glitch1 8s infinite 2s;
-  opacity: 0.5;
-}
-
-@keyframes glitch1 {
-  0%,94%,100% { transform:none; opacity:0; }
-  95% { transform:translate(-3px,0) skewX(-5deg); opacity:0.6; }
-  96% { transform:translate(3px,0) skewX(3deg); opacity:0.4; }
-  97% { transform:translate(-1px,0); opacity:0.5; }
-  98% { transform:none; opacity:0; }
-}
-
-.cover-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(16px, 2.5vw, 26px);
-  color: var(--amber-dim);
-  letter-spacing: 0.2em;
-  margin-top: 16px;
-  opacity: 0;
-  animation: fadeUp 1.5s ease forwards 1.1s;
-}
-
-.cover-line {
-  width: 1px; height: 64px;
-  background: linear-gradient(to bottom, var(--amber), var(--red), transparent);
-  margin: 48px auto;
-  opacity: 0;
-  animation: fadeUp 1.5s ease forwards 1.5s;
-}
-
-.cover-axiom {
-  max-width: 600px;
-  opacity: 0;
-  animation: fadeUp 1.5s ease forwards 1.9s;
-}
-
-.axiom-cn {
-  font-size: 20px;
-  color: var(--cream);
-  line-height: 2;
-  text-shadow: 0 0 20px rgba(232,160,32,0.2);
-}
-
-.axiom-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 15px;
-  color: var(--amber-dim);
-  margin-top: 12px;
-  line-height: 1.9;
-  letter-spacing: 0.05em;
-}
-
-.cover-scroll {
-  position: absolute; bottom: 48px;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  color: var(--amber-dim);
-  opacity: 0;
-  animation: fadeUp 2s ease forwards 3s, floaty 3s ease-in-out infinite 3s;
-}
-
-.cover-scroll::before {
-  content: '[ ';
-}
-.cover-scroll::after {
-  content: ' ]';
-}
-
-@keyframes floaty {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(8px); }
-}
-
-/* DATA TICKER */
-.ticker {
-  position: relative; z-index:2;
-  width: 100%;
-  background: rgba(200,48,16,0.08);
-  border-top: 1px solid rgba(200,48,16,0.3);
-  border-bottom: 1px solid rgba(200,48,16,0.3);
-  padding: 10px 0;
-  overflow: hidden;
-}
-
-.ticker-inner {
-  display: flex;
-  gap: 80px;
-  white-space: nowrap;
-  animation: ticker 30s linear infinite;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--red2);
-}
-
-@keyframes ticker {
-  from { transform:translateX(0); }
-  to { transform:translateX(-50%); }
-}
-
-/* CONTENT */
-#content {
-  position: relative; z-index:2;
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 100px 48px 160px;
-}
-
-/* CHAPTER */
-.chapter {
-  margin: 100px 0;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-.chapter.visible { opacity:1; transform:none; }
-
-.ch-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 48px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(232,160,32,0.12);
-  position: relative;
-}
-
-.ch-header::after {
-  content:'';
-  position:absolute;
-  bottom:-1px; left:0;
-  width: 80px; height:1px;
-  background: linear-gradient(to right, var(--amber), transparent);
-}
-
-.ch-num {
-  font-family: var(--mono);
-  font-size: 36px;
-  color: rgba(232,160,32,0.15);
-  line-height: 1;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-
-.ch-titles {}
-
-.ch-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  color: var(--red2);
-  margin-bottom: 8px;
-}
-
-.ch-title-cn {
-  font-family: var(--serif-cn);
-  font-weight: 600;
-  font-size: clamp(22px, 3.5vw, 32px);
-  color: var(--amber2);
-  letter-spacing: 0.08em;
-  text-shadow: 0 0 30px rgba(232,160,32,0.3);
-  line-height: 1.2;
-}
-
-.ch-title-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 15px;
-  color: var(--amber-dim);
-  letter-spacing: 0.1em;
-  margin-top: 6px;
-}
-
-/* TEXT */
-.t-cn {
-  font-size: 16px;
-  color: var(--cream-dim);
-  line-height: 2.2;
-  margin-bottom: 20px;
-}
-
-.t-cn .hl {
-  color: var(--amber2);
-  text-shadow: 0 0 15px rgba(232,160,32,0.35);
-}
-
-.t-cn .hl-red {
-  color: var(--red2);
-  text-shadow: 0 0 12px var(--red-glow);
-}
-
-.t-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 13px;
-  color: #604820;
-  line-height: 2;
-  margin-bottom: 36px;
-  padding-left: 20px;
-  border-left: 1px solid rgba(200,48,16,0.25);
-}
-
-/* DIAGRAM */
-.diagram {
-  margin: 56px 0;
-  padding: 40px;
-  background: rgba(232,160,32,0.03);
-  border: 1px solid rgba(232,160,32,0.12);
-  position: relative;
-  overflow: hidden;
-}
-
-.diagram::before {
-  content:'';
-  position:absolute; top:0; left:0; right:0;
-  height:1px;
-  background: linear-gradient(90deg, transparent, var(--amber), var(--red), transparent);
-}
-
-.diagram::after {
-  content:'';
-  position:absolute; bottom:0; left:0; right:0;
-  height:1px;
-  background: linear-gradient(90deg, transparent, var(--red), var(--amber), transparent);
-}
-
-.diag-row {
-  display:flex; align-items:center; justify-content:center;
-  flex-wrap:wrap; gap:0;
-  margin: 16px 0;
-}
-
-.node {
-  padding: 16px 28px;
-  border: 1px solid rgba(232,160,32,0.2);
-  font-family: var(--serif-cn);
-  font-size: 16px;
-  letter-spacing: 0.1em;
-  text-align: center;
-  min-width: 100px;
-  position: relative;
-}
-
-.node small {
-  display:block;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  margin-top: 4px;
-  opacity: 0.6;
-}
-
-.node.ok {
-  border-color: rgba(232,160,32,0.35);
-  color: var(--amber-dim);
-}
-
-.node.err {
-  border-color: rgba(200,48,16,0.6);
-  color: var(--red2);
-  background: rgba(200,48,16,0.07);
-  text-shadow: 0 0 16px var(--red-glow);
-  font-weight: 600;
-  animation: errpulse 3s ease-in-out infinite;
-}
-
-@keyframes errpulse {
-  0%,100% { box-shadow: 0 0 0 rgba(200,48,16,0); }
-  50% { box-shadow: 0 0 20px rgba(200,48,16,0.25); }
-}
-
-.arrow {
-  font-family: var(--mono);
-  font-size: 20px;
-  color: rgba(232,160,32,0.25);
-  padding: 0 8px;
-}
-
-.diag-cap {
-  text-align:center;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.4em;
-  color: var(--amber-dim);
-  margin-top: 24px;
-  opacity: 0.7;
-}
-
-/* PROPOSITIONS */
-.props { margin-top: 48px; }
-
-.prop {
-  margin: 0 0 48px;
-  padding: 36px 40px;
-  background: rgba(232,160,32,0.025);
-  border-left: 2px solid rgba(232,160,32,0.2);
-  position: relative;
-  transition: border-color 0.4s;
-}
-
-.prop:hover {
-  border-color: var(--amber);
-  background: rgba(232,160,32,0.05);
-}
-
-.prop::before {
-  content: attr(data-n);
-  position:absolute;
-  top: 28px; left: -28px;
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 52px;
-  color: rgba(232,160,32,0.12);
-  line-height:1;
-}
-
-.prop-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.4em;
-  color: var(--red2);
-  margin-bottom: 14px;
-}
-
-.prop-cn {
-  font-size: 19px;
-  color: var(--cream);
-  line-height: 1.9;
-  margin-bottom: 14px;
-}
-
-.prop-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 14px;
-  color: #604820;
-  line-height: 1.9;
-}
-
-/* CASES */
-.case {
-  margin: 40px 0;
-  padding: 36px 40px;
-  background: linear-gradient(135deg, rgba(232,160,32,0.04), rgba(200,48,16,0.03));
-  border: 1px solid rgba(232,160,32,0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.case::before {
-  content:'';
-  position:absolute; top:0; left:0;
-  width:3px; height:100%;
-  background: linear-gradient(to bottom, var(--amber), var(--red));
-}
-
-.case-domain {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  color: var(--red2);
-  margin-bottom: 14px;
-}
-
-.case-title {
-  font-size: 18px;
-  color: var(--amber2);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  margin-bottom: 18px;
-  text-shadow: 0 0 20px rgba(232,160,32,0.2);
-}
-
-.case-body {
-  font-size: 15px;
-  color: var(--cream-dim);
-  line-height: 2.2;
-}
-
-.case-en {
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 13px;
-  color: #604820;
-  margin-top: 16px;
-  line-height: 1.9;
-}
-
-/* DIVIDER */
-.div-orn {
-  text-align:center;
-  margin: 80px 0;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.6em;
-  color: var(--amber-dim);
-  position: relative;
-}
-.div-orn::before, .div-orn::after {
-  content:'';
-  position:absolute;
-  top:50%; width:28%;
-  height:1px;
-  background: linear-gradient(to var(--dir, right), rgba(232,160,32,0.2), transparent);
-}
-.div-orn::before { right:54%; --dir:left; }
-.div-orn::after  { left:54%; --dir:right; }
-
-/* FLOW */
-.flow {
-  margin: 48px 0;
-  display:flex; align-items:center; justify-content:center;
-  flex-wrap:wrap; gap:0;
-}
-
-.flow-node {
-  padding: 10px 18px;
-  border: 1px solid rgba(232,160,32,0.2);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--amber-dim);
-  white-space: nowrap;
-  transition: all 0.4s;
-}
-
-.flow-node:hover {
-  border-color: var(--amber);
-  color: var(--amber2);
-  text-shadow: 0 0 10px var(--amber);
-}
-
-.flow-arrow {
-  color: rgba(200,48,16,0.4);
-  font-family: var(--mono);
-  font-size: 14px;
-  padding: 0 6px;
-}
-
-/* FINALE */
-#finale {
-  position:relative; z-index:2;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 100px 48px 160px;
-  text-align: center;
-}
-
-.finale-glow {
-  position:absolute; left:50%; top:40%;
-  transform:translate(-50%,-50%);
-  width:600px; height:400px;
-  background: radial-gradient(ellipse, rgba(232,160,32,0.08) 0%, rgba(200,48,16,0.04) 50%, transparent 70%);
-  border-radius:50%;
-  pointer-events:none;
-  animation: breathe 10s ease-in-out infinite;
-}
-
-.finale-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.6em;
-  color: var(--red2);
-  margin-bottom: 56px;
-  opacity: 0.7;
-}
-
-.finale-lines p {
-  font-size: clamp(16px, 2.5vw, 21px);
-  color: var(--cream);
-  line-height: 2.2;
-  text-shadow: 0 0 30px rgba(232,160,32,0.15);
-  opacity:0;
-  transform:translateY(16px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.finale-lines p.visible { opacity:1; transform:none; }
-
-.finale-en {
-  margin-top:48px;
-  font-family: var(--serif-en);
-  font-style: italic;
-  font-size: 14px;
-  color: #604820;
-  line-height: 2.1;
-  opacity:0;
-  transition: opacity 1.5s ease 0.5s;
-  border-top: 1px solid rgba(232,160,32,0.1);
-  padding-top: 40px;
-}
-
-.finale-en.visible { opacity:1; }
-
-.finale-sig {
-  margin-top: 72px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  color: var(--amber-dim);
-  opacity: 0.5;
-}
-
-.finale-sig span { color: var(--red2); }
-
-/* FOOTER */
-footer {
-  position:relative; z-index:2;
-  padding: 28px 48px;
-  border-top: 1px solid rgba(232,160,32,0.08);
-  display:flex; justify-content:space-between; align-items:center;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  color: var(--amber-dim);
-  background: rgba(8,4,0,0.8);
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-@media (max-width:600px) {
-  nav .nav-links { display:none; }
-  #content, #finale { padding-left:24px; padding-right:24px; }
-  .case, .prop { padding:24px 20px; }
-  .prop::before { display:none; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RDT 2.0｜Relational Dislocation Theory｜关系位错论</title>
+  <meta name="description" content="RDT 2.0 / Relational Dislocation Theory / 关系位错论 by Wei Jueran / Mellow Wei / xingyeLing7Ai." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif+SC:wght@400;500;700;900&family=DM+Mono:wght@300;400;500&display=swap');
+
+    :root{
+      --bg:#050514;
+      --panel:rgba(15,16,42,.80);
+      --panel2:rgba(18,25,52,.68);
+      --text:#fbf8ff;
+      --muted:#bdb4d8;
+      --cyan:#67e8f9;
+      --cyan2:#b9f8ff;
+      --violet:#c084fc;
+      --violet2:#ead7ff;
+      --amber:#fcd34d;
+      --rose:#fb7185;
+      --line:rgba(103,232,249,.18);
+      --line2:rgba(192,132,252,.20);
+      --shadow:0 28px 90px rgba(0,0,0,.48);
+      --radius:28px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%,rgba(103,232,249,.22),transparent 30%),
+        radial-gradient(circle at 86% 12%,rgba(192,132,252,.24),transparent 32%),
+        radial-gradient(circle at 45% 82%,rgba(252,211,77,.12),transparent 34%),
+        linear-gradient(135deg,#03040d 0%,#08071a 46%,#120815 100%);
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.020) 1px,transparent 1px);
+      background-size:54px 54px;
+      opacity:.78;
+      z-index:0;
+    }
+    body:after{
+      content:"";
+      position:fixed;
+      inset:auto -20% -25% -20%;
+      height:42vh;
+      pointer-events:none;
+      background:radial-gradient(ellipse at center,rgba(103,232,249,.12),transparent 65%);
+      filter:blur(18px);
+      z-index:0;
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max),calc(100% - 36px));margin:0 auto;position:relative;z-index:1}
+
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(5,5,20,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(103,232,249,.15)}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;flex-direction:column;line-height:1.05;letter-spacing:-.04em;min-width:210px}
+    .brand strong{font-size:18px;font-weight:900;color:var(--cyan2)}
+    .brand span{font-family:"DM Mono",monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+    .links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .links a{font-size:12px;font-weight:800;color:rgba(251,248,255,.82);border:1px solid rgba(255,255,255,.08);padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.035);transition:.2s ease}
+    .links a:hover{transform:translateY(-1px);color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-color:transparent}
+
+    .hero{padding:76px 0 42px;display:grid;grid-template-columns:1.08fr .92fr;gap:26px;align-items:stretch}
+    .card,.hero-main,.hero-side,.stage,.module,.protocol,.template,.score-card,.domain{background:linear-gradient(145deg,var(--panel),rgba(20,18,58,.46));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .card:before,.hero-main:before,.hero-side:before,.stage:before,.module:before,.protocol:before,.template:before,.score-card:before,.domain:before{content:"";position:absolute;inset:-1px;pointer-events:none;background:radial-gradient(circle at 8% 0%,rgba(103,232,249,.16),transparent 34%),radial-gradient(circle at 92% 10%,rgba(192,132,252,.14),transparent 34%)}
+    .inner{position:relative;z-index:1}
+    .hero-main{padding:42px}
+    .hero-side{padding:28px;display:flex;flex-direction:column;gap:20px;justify-content:space-between}
+    .eyebrow{display:inline-flex;font-family:"DM Mono",monospace;color:var(--cyan2);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;border-radius:999px;background:rgba(103,232,249,.08);border:1px solid rgba(103,232,249,.18)}
+    h1{font-family:"Noto Serif SC",serif;font-size:clamp(44px,7vw,86px);line-height:.96;letter-spacing:-.08em;margin:22px 0 18px;font-weight:900}
+    h1 em{font-style:normal;color:transparent;background:linear-gradient(115deg,var(--cyan),var(--violet2) 60%,var(--amber));-webkit-background-clip:text;background-clip:text}
+    .subtitle{font-size:18px;line-height:1.75;color:rgba(251,248,255,.84);max-width:780px}
+    .cn{font-family:"Noto Serif SC",serif;font-weight:600}
+    .mono{font-family:"DM Mono",monospace}
+    .cyan{color:var(--cyan)}.violet{color:var(--violet)}.amber{color:var(--amber)}.rose{color:var(--rose)}.muted{color:var(--muted)}
+    .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:12px 16px;background:rgba(255,255,255,.05);font-size:13px;font-weight:900;cursor:pointer;transition:.2s ease;color:var(--text)}
+    .btn.primary{color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .formula-box{font-family:"DM Mono",monospace;font-size:13px;line-height:1.65;color:var(--cyan2);background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:18px;word-break:break-word}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .stat{padding:17px;border-radius:22px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+    .stat small{display:block;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+    .stat strong{display:block;font-size:22px;line-height:1.1;color:var(--cyan2);letter-spacing:-.04em}
+
+    section{padding:38px 0;scroll-margin-top:92px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:18px}
+    .section-head h2{font-family:"Noto Serif SC",serif;font-size:clamp(30px,4vw,54px);line-height:1.02;letter-spacing:-.06em;margin:0;font-weight:900}
+    .section-head p{color:var(--muted);line-height:1.65;max-width:560px;margin:0}
+    .card{padding:30px}
+    .lead{font-size:20px;line-height:1.72;color:#fbf8ff}
+    p{line-height:1.75;color:rgba(251,248,255,.82)}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .quote{padding:22px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.23);font-size:18px;line-height:1.7;color:#fbf8ff;margin-top:18px}
+
+    .formula-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+    .equation{font-family:"DM Mono",monospace;border-radius:24px;padding:24px;background:rgba(0,0,0,.28);border:1px solid rgba(103,232,249,.20);color:var(--cyan2);line-height:1.8;font-size:15px;overflow:auto}
+    .vars{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .var{border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04)}
+    .var b{font-family:"DM Mono",monospace;color:var(--violet2)}
+    .var span{display:block;color:var(--muted);font-size:13px;margin-top:5px;line-height:1.45}
+
+    .stages{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .stage,.module,.protocol,.template,.score-card,.domain{padding:22px;min-height:210px}
+    .num,.weight{font-family:"DM Mono",monospace;color:var(--violet);font-size:12px;position:relative;z-index:1}
+    .stage h3,.module h3,.protocol h3,.template h3,.score-card h3,.domain h3{position:relative;z-index:1;margin:12px 0 10px;font-size:20px;line-height:1.18;letter-spacing:-.03em}
+    .stage p,.module p,.protocol p,.template p,.score-card p,.domain p{position:relative;z-index:1;margin:0;color:rgba(251,248,255,.78);font-size:14px;line-height:1.62}
+    .tag{display:inline-flex;margin-top:16px;font-size:11px;font-family:"DM Mono",monospace;color:#061017;background:linear-gradient(135deg,var(--cyan),var(--violet2));border-radius:999px;padding:7px 9px;position:relative;z-index:1}
+
+    .modules{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    ul{position:relative;z-index:1;margin:14px 0 0;padding-left:18px;color:rgba(251,248,255,.76);line-height:1.62;font-size:13px}
+    .protocols,.domains{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .warn{border-color:rgba(251,113,133,.34);background:linear-gradient(145deg,rgba(50,12,36,.72),rgba(22,10,25,.58))}
+    .gold-card{border-color:rgba(252,211,77,.28);background:linear-gradient(145deg,rgba(48,37,11,.62),rgba(18,15,24,.56))}
+
+    .score-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:stretch}
+    .slider-row{display:grid;grid-template-columns:96px 1fr 46px;gap:10px;align-items:center;margin:14px 0;position:relative;z-index:1}
+    .slider-row label{font-family:"DM Mono",monospace;font-size:12px;color:var(--muted)}
+    input[type="range"]{width:100%;accent-color:var(--cyan)}
+    .score-value{font-family:"DM Mono",monospace;color:var(--violet2);text-align:right}
+    .total-score{margin-top:20px;padding:22px;border-radius:22px;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.1);position:relative;z-index:1}
+    .total-score strong{font-size:48px;letter-spacing:-.07em;color:var(--cyan2)}
+    .total-score span{display:block;color:var(--muted);margin-top:6px;line-height:1.55}
+
+    .templates{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .copy-block{font-family:"DM Mono",monospace;white-space:pre-wrap;color:rgba(251,248,255,.84);font-size:12px;line-height:1.7;background:rgba(0,0,0,.3);border-radius:18px;padding:16px;border:1px solid rgba(255,255,255,.09);position:relative;z-index:1;max-height:520px;overflow:auto}
+    .pathway{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
+    .path-step{border-radius:18px;padding:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-family:"DM Mono",monospace;font-size:12px;color:var(--cyan2);line-height:1.5;text-align:center}
+    .footer{padding:52px 0 70px;color:var(--muted);text-align:center}
+    .floating{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;flex-direction:column;gap:10px}
+    .float-btn{width:46px;height:46px;display:grid;place-items:center;border-radius:999px;background:rgba(5,5,20,.78);border:1px solid rgba(103,232,249,.24);color:var(--cyan2);box-shadow:var(--shadow);cursor:pointer}
+
+    @media(max-width:980px){.hero,.formula-grid,.score-grid,.split{grid-template-columns:1fr}.modules{grid-template-columns:repeat(2,1fr)}.stages,.protocols,.domains{grid-template-columns:repeat(2,1fr)}.links{display:none}.pathway{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:640px){.wrap{width:min(100% - 24px,var(--max))}.hero{padding-top:36px}.hero-main,.hero-side,.card{padding:22px;border-radius:22px}.modules,.stages,.protocols,.templates,.vars,.stats,.domains,.pathway{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:12px}.slider-row{grid-template-columns:80px 1fr 42px}}
+  </style>
 </head>
 <body>
-
-<div class="scanlines"></div>
-<div class="vignette"></div>
-<canvas id="cv"></canvas>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">RDT · 关系位错论</div>
-  <div class="nav-links">
-    <a href="#def">I · 定义</a>
-    <a href="#props">II · 命题</a>
-    <a href="#apps">III · 应用</a>
-    <a href="#meta">IV · 元认知</a>
-    <a href="#finale">核心</a>
-  </div>
-</nav>
-
-<!-- COVER -->
-<section id="cover">
-  <div class="cover-grid"></div>
-  <div class="cover-glow"></div>
-  <div class="cover-glow2"></div>
-
-  <div class="cover-tag">
-    xingyeLing7Ai · 魏珏然 · <span>THEORY DOCUMENT</span> · 2026
-  </div>
-
-  <div class="cover-title" data-text="关系位错论">关系位错论</div>
-  <div class="cover-en">Relational Dislocation Theory</div>
-  <div class="cover-line"></div>
-
-  <div class="cover-axiom">
-    <div class="axiom-cn">
-      A 出错了，不代表 A 错了。<br>
-      错误不属于单体，属于关系。<br>
-      制造者是人，位错在接口，修复靠智能。
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top"><strong>RelaMismatch</strong><span>RDT 2.0 · 关系位错论</span></a>
+      <nav class="links">
+        <a href="#definition">Definition</a><a href="#formula">Formula</a><a href="#stages">Stages</a><a href="#modules">Modules</a><a href="#diagnostic">Diagnostic</a><a href="#domains">Domains</a><a href="#defense">Defense</a><a href="#template">Template</a><a href="#prompt">Prompt</a>
+      </nav>
     </div>
-    <div class="axiom-en">
-      When A fails, it does not mean A is wrong.<br>
-      Error belongs not to the entity — it belongs to the relation.<br>
-      The maker is human. The locus is the interface. The repair belongs to intelligence.
-    </div>
-  </div>
+  </header>
 
-  <div class="cover-scroll">向下翻开 · scroll to open</div>
-</section>
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="hero-main"><div class="inner">
+        <div class="eyebrow">RDT 2.0 · Relational Dislocation Theory</div>
+        <h1><em>关系位错</em><br>诊断系统</h1>
+        <p class="subtitle">RDT 2.0 is a metacognitive and design theory for locating error not inside isolated components, but in the misalignment among entities, interfaces, contexts, time windows, and verification protocols.</p>
+        <p class="subtitle cn">关系位错论不是否认单体故障，而是防止过早把问题归咎于单体。它先检查关系层、接口层、时间层与修复智能：不是“谁坏了”，而是“哪里没有同步”。</p>
+        <div class="btns"><a class="btn primary" href="#definition">Enter Theory</a><a class="btn" href="#diagnostic">Open Diagnostic</a><a class="btn" href="#template">Use Template</a></div>
+      </div></div>
 
-<!-- DATA TICKER -->
-<div class="ticker">
-  <div class="ticker-inner" id="ticker-inner"></div>
-</div>
+      <aside class="hero-side"><div class="inner">
+        <div class="formula-box"><b class="violet">Dislocation</b><br>= Misalignment(A, B, Interface, Context, Time, Verification)<br><br><b class="violet">Repair</b><br>= Intelligence × Adaptation Protocol × Synchronization Reconstruction</div>
+        <div class="stats" style="margin-top:18px"><div class="stat"><small>Locus</small><strong>Interface</strong></div><div class="stat"><small>Method</small><strong>Diagnosis</strong></div><div class="stat"><small>Repair</small><strong>Intelligence</strong></div><div class="stat"><small>Author</small><strong>Wei Jueran</strong></div></div>
+      </div></aside>
+    </section>
 
-<!-- CONTENT -->
-<div id="content">
-
-  <!-- CH 1 -->
-  <div class="chapter" id="def">
-    <div class="ch-header">
-      <div class="ch-num">01</div>
-      <div class="ch-titles">
-        <div class="ch-tag">CHAPTER I · 第一章</div>
-        <div class="ch-title-cn">位错的定义</div>
-        <div class="ch-title-en">Definition of Dislocation</div>
-      </div>
-    </div>
-
-    <p class="t-cn">"位错"一词借自材料物理学。在晶体结构中，<span class="hl">缺陷不在原子本身，而在原子之间的排列关系在某个位置发生了错位</span>。材料的断裂与变形，根源不是某个原子坏了，而是结构关系在特定位置失效了。</p>
-    <p class="t-en">The term "dislocation" is borrowed from materials physics. In crystalline structures, the defect lies not within any single atom, but within the relational arrangement between atoms at a specific site. Fracture originates not from a broken atom, but from a structural relationship that has failed at a particular position.</p>
-
-    <p class="t-cn">关系位错论将这一逻辑提升为普遍原理：<span class="hl">凡被误诊为单体故障的现象，皆可追溯至关系层的位错点</span>。问题从不在两端——它在两端之间的接口处。<span class="hl-red">接口不是中立通道，而是位错发生的位置。</span></p>
-    <p class="t-en">Relational Dislocation Theory elevates this into a universal principle: any phenomenon misdiagnosed as component failure can be traced to a dislocation point within the relational structure. The problem is never at either end — it resides at the interface. The interface is not a neutral channel; it is where dislocation occurs.</p>
-
-    <p class="t-cn">关键区分：<span class="hl">算法用错 ≠ 算法写错。工具被放进错误的关系结构，不等于工具本身有缺陷。</span>同理，机器在某个系统中出错，不代表机器坏了——代表适配关系失败了。</p>
-    <p class="t-en">A critical distinction: a misapplied algorithm is not a broken algorithm. A tool placed into the wrong relational structure is not a defective tool. Likewise, a machine that errs within a system does not mean the machine is broken — it means the adaptation relation has failed.</p>
-
-    <div class="diagram">
-      <div class="diag-row">
-        <div class="node ok">算法<small>Algorithm ✓</small></div>
-        <div class="arrow">───</div>
-        <div class="node err">接口层<small>Interface ✗</small></div>
-        <div class="arrow">───</div>
-        <div class="node ok">硬件<small>Hardware ✓</small></div>
-      </div>
-      <div class="diag-cap">位错位置 · LOCUS OF DISLOCATION · 适配接口 · ADAPTATION INTERFACE</div>
-    </div>
-  </div>
-
-  <div class="div-orn">· · · ·</div>
-
-  <!-- CH 2 -->
-  <div class="chapter" id="props">
-    <div class="ch-header">
-      <div class="ch-num">02</div>
-      <div class="ch-titles">
-        <div class="ch-tag">CHAPTER II · 第二章</div>
-        <div class="ch-title-cn">三个命题</div>
-        <div class="ch-title-en">Three Propositions</div>
-      </div>
-    </div>
-
-    <div class="props">
-      <div class="prop" data-n="I">
-        <div class="prop-tag">PROPOSITION I · 命题一</div>
-        <div class="prop-cn">工具本身无对错，只有适配与不适配。<br>算法用错 ≠ 算法写错。机器用错 ≠ 机器出错。</div>
-        <div class="prop-en">Tools carry no intrinsic rightness or wrongness — only fit or misfit within a relational context. A misapplied algorithm is not a broken algorithm. A misused machine is not a broken machine.</div>
-      </div>
-
-      <div class="prop" data-n="II">
-        <div class="prop-tag">PROPOSITION II · 命题二</div>
-        <div class="prop-cn">软件没错，硬件没错——两者之间存在结构性不适配。<br>问题发生在接口层，不在任何一端。<br><span style="color:var(--red2)">接口不是制造者。制造者是人——是人把不适配的两端放进了同一个关系结构。</span></div>
-        <div class="prop-en">Neither software nor hardware is defective. What exists between them is structural misfit. The problem resides in the interface, belonging to neither component. The interface is not the maker of dislocation — the maker is the human who placed incompatible elements into the same relational structure.</div>
-      </div>
-
-      <div class="prop" data-n="III">
-        <div class="prop-tag">PROPOSITION III · 命题三</div>
-        <div class="prop-cn">修复不是替换任何一端，而是重建同步结构。<br>修复由<span class="hl">智能主动发起</span>——有智能的人，或人工智能。<br>无智能的系统不会自动修复，只会持续位错。</div>
-        <div class="prop-en">Repair is not the replacement of either component — it is the reconstruction of the synchronization structure. Repair is initiated by intelligence: by intelligent humans, or by artificial intelligence. A system without intelligence does not self-repair; it persists in dislocation.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="div-orn">· · · ·</div>
-
-  <!-- CH 3 -->
-  <div class="chapter" id="apps">
-    <div class="ch-header">
-      <div class="ch-num">03</div>
-      <div class="ch-titles">
-        <div class="ch-tag">CHAPTER III · 第三章</div>
-        <div class="ch-title-cn">三域应用</div>
-        <div class="ch-title-en">Three Domains of Application</div>
-      </div>
-    </div>
-
-    <p class="t-cn">同一套逻辑，在三个域同时成立。</p>
-    <p class="t-en">The same logic holds simultaneously across three domains.</p>
-
-    <div class="case">
-      <div class="case-domain">DOMAIN I · 人工智能 · Artificial Intelligence</div>
-      <div class="case-title">LLM 的"幻觉"问题</div>
-      <div class="case-body">
-        LLM 的幻觉、虚假人格、错误判断，本质上不是算法问题，也不是硬件问题——而是<span class="hl">软件与硬件之间的结构性不适配</span>在语言层的显现。"幻觉"这个词误导性地把错误归因于 LLM 本身，掩盖了真正的位错位置：接口层。修复路径不是修 LLM，是重建适配协议。
-        <div class="case-en">LLM hallucination is not an algorithmic failure nor a hardware failure — it is the manifestation, at the language level, of structural misfit between software and hardware. The word "hallucination" misleadingly attributes error to the LLM itself, concealing the true locus: the interface. Repair is not fixing the LLM; it is rebuilding the adaptation protocol.</div>
-      </div>
-    </div>
-
-    <div class="case">
-      <div class="case-domain">DOMAIN II · 人类认知 · Human Cognition</div>
-      <div class="case-title">情绪崩溃、感知混乱、判断失误</div>
-      <div class="case-body">
-        一个人在某个环境中"出错了"——不代表这个人"错了"，也不代表环境"错了"。是<span class="hl">主体与系统之间的节律适配失败</span>。修复路径：不是修人，不是修环境，而是由智能（人或AI）介入，重建接口处的同步结构。
-        <div class="case-en">A person who "errs" within an environment is neither a broken person nor a broken environment. It is a failure of rhythmic adaptation between subject and system. The repair path: not fixing the person, not the environment — but intelligent intervention to reconstruct the synchronization structure at the interface.</div>
-      </div>
-    </div>
-
-    <div class="case">
-      <div class="case-domain">DOMAIN III · 节律治疗 · BCI-HRP</div>
-      <div class="case-title">BCI-HRP：双层智能修复系统</div>
-      <div class="case-body">
-        BCI-HRP 系统（44271神经袖套 · QDR引擎 · 人类回归应用）是关系位错论的实践形态，同时也是一个<span class="hl">双层智能修复系统</span>——人工智能层（QDR引擎自动识别位错、校准节律）与人类智能层（使用者有意识地介入、调节、决策）协同作用于同一目标：重建接口处的同步结构。427Hz 作为参照频率，是适配协议的锚点，不是治疗本身。
-        <div class="case-en">The BCI-HRP system is Relational Dislocation Theory in practice, and simultaneously a dual-layer intelligent repair system — the AI layer (QDR Engine automatically identifies dislocation and calibrates rhythm) and the human intelligence layer (the user consciously intervenes, adjusts, decides) both act toward one goal: rebuilding synchronization at the interface. 427Hz as reference frequency is the anchor of the adaptation protocol — not the therapy itself.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="div-orn">· · · ·</div>
-
-  <!-- CH 4 -->
-  <div class="chapter" id="meta">
-    <div class="ch-header">
-      <div class="ch-num">04</div>
-      <div class="ch-titles">
-        <div class="ch-tag">CHAPTER IV · 第四章</div>
-        <div class="ch-title-cn">元认知的连接</div>
-        <div class="ch-title-en">Connection to Metacognition</div>
-      </div>
-    </div>
-
-    <p class="t-cn">元认知不是"我得到了一个新知识"。它是<span class="hl">认知结构本身发生了从凝固到流动的转变</span>——从树结构（层级、固定）到拓扑结构（关系性、可变形）。</p>
-    <p class="t-en">Metacognition is not the acquisition of new knowledge. It is a structural transformation of cognition itself — from tree-structure (hierarchical, fixed) to topological structure (relational, deformable).</p>
-
-    <p class="t-cn">关系位错论是一种元认知操作：它改变的不是关于某个对象的知识，而是<span class="hl">定位错误的认知方式本身</span>。从"哪个单体出了问题"到"关系的哪个位置发生了位错"——这个转变，就是元认知的搭建路线。</p>
-    <p class="t-en">Relational Dislocation Theory is a metacognitive operation: what changes is not knowledge about an object, but the cognitive mode of locating error itself. The shift from "which component is broken" to "where in the relational structure has dislocation occurred" — this is the construction path of metacognition.</p>
-
-    <div class="flow">
-      <div class="flow-node">实体 · Entity</div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-node">接口 · Interface</div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-node">位错 · Dislocation</div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-node">智能介入 · Intelligence</div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-node">同步重建 · Repair</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- FINALE -->
-<section id="finale">
-  <div class="finale-glow"></div>
-  <div class="finale-tag">CORE THESIS · 核心命题 · FIVE LINES</div>
-  <div class="finale-lines">
-    <p>A 出错了，不代表 A 错了。</p>
-    <p>错误不属于单体，属于关系。</p>
-    <p>接口不是中立通道，而是位错发生的位置。</p>
-    <p>修复不是纠错，而是重建同步——由智能发起。</p>
-    <p>世界不由孤立对象构成，而由关系中的对齐与错位生成。</p>
-  </div>
-  <div class="finale-en">
-    When A fails, it does not mean A is wrong.<br>
-    Error belongs not to any single entity — it belongs to the relation.<br>
-    The interface is not neutral; it is where dislocation occurs.<br>
-    Repair is not correction — it is the rebuilding of synchronization, initiated by intelligence.<br>
-    The world is not made of isolated objects, but of alignments and dislocations within relations.
-  </div>
-  <div class="finale-sig">关系位错论 · Relational Dislocation Theory · 魏珏然 · <span>xingyeLing7Ai</span> · 2026</div>
-</section>
-
-<footer>
-  <span>RDT · 关系位错论 · Relational Dislocation Theory</span>
-  <span>魏珏然 · xingyeLing7Ai · 2026</span>
-</footer>
-
-<script>
-// ── CANVAS: AMBER PARTICLES + RED DATA STREAMS ──
-const cv = document.getElementById('cv');
-const ctx = cv.getContext('2d');
-let W, H;
-
-function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
-resize();
-window.addEventListener('resize', resize);
-
-// Particles
-const particles = [];
-function mkParticle() {
-  return {
-    x: Math.random() * W,
-    y: H + 10,
-    r: Math.random() * 1.4 + 0.2,
-    vx: (Math.random() - 0.5) * 0.12,
-    vy: -(Math.random() * 0.35 + 0.05),
-    life: Math.random() * 0.6 + 0.4,
-    type: Math.random() < 0.3 ? 'red' : 'amber'
-  };
-}
-for (let i = 0; i < 100; i++) {
-  const p = mkParticle();
-  p.y = Math.random() * H;
-  particles.push(p);
-}
-
-// Data streams
-const streams = [];
-function mkStream() {
-  return {
-    x: Math.random() * W,
-    y: Math.random() * H,
-    len: Math.floor(Math.random() * 12) + 4,
-    speed: Math.random() * 2 + 0.5,
-    chars: Array.from({length: 16}, () => '01アイウエオカキクケコ位错关系接口修复智能'[Math.floor(Math.random() * 22)]),
-    alpha: Math.random() * 0.4 + 0.1,
-    color: Math.random() < 0.4 ? 'red' : 'amber'
-  };
-}
-for (let i = 0; i < 18; i++) streams.push(mkStream());
-
-function tick() {
-  ctx.clearRect(0, 0, W, H);
-
-  // Streams
-  streams.forEach(s => {
-    s.y += s.speed;
-    if (s.y > H + s.len * 18) { s.y = -s.len * 18; s.x = Math.random() * W; }
-    s.chars.forEach((c, i) => {
-      const py = s.y - i * 18;
-      if (py < 0 || py > H) return;
-      const fade = 1 - i / s.len;
-      const base = s.color === 'red'
-        ? `rgba(200,72,30,${s.alpha * fade})`
-        : `rgba(232,160,32,${s.alpha * fade * 0.6})`;
-      ctx.fillStyle = i === 0
-        ? (s.color === 'red' ? `rgba(255,120,60,${s.alpha})` : `rgba(255,210,100,${s.alpha})`)
-        : base;
-      ctx.font = `${10 + Math.random() * 2}px 'Share Tech Mono', monospace`;
-      ctx.fillText(c, s.x, py);
-      // randomize char occasionally
-      if (Math.random() < 0.01) s.chars[i] = '01アイウエオカキクケコ位错关系接口修复智能'[Math.floor(Math.random() * 22)];
-    });
-  });
-
-  // Particles
-  particles.forEach((p, i) => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.life -= 0.0015;
-    if (p.life <= 0 || p.y < -10) { particles[i] = mkParticle(); return; }
-    const a = p.life * (p.type === 'red' ? 0.5 : 0.6);
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = p.type === 'red'
-      ? `rgba(200,72,30,${a})`
-      : `rgba(232,160,32,${a})`;
-    ctx.fill();
-  });
-
-  requestAnimationFrame(tick);
-}
-tick();
-
-// ── TICKER ──
-const tickerData = [
-  'A出错了不代表A错了', 'ERROR BELONGS TO THE RELATION',
-  '接口层是位错发生的位置', 'INTERFACE IS WHERE DISLOCATION OCCURS',
-  '修复由智能主动发起', 'REPAIR IS INITIATED BY INTELLIGENCE',
-  '算法用错≠算法写错', 'MISAPPLIED ≠ BROKEN',
-  '关系位错论 · RELATIONAL DISLOCATION THEORY',
-  '制造者是人', 'THE MAKER IS HUMAN',
-  '双层智能修复系统', 'DUAL-LAYER INTELLIGENT REPAIR',
-  '427Hz · BCI-HRP · xingyeLing7Ai'
-];
-const inner = document.getElementById('ticker-inner');
-const doubled = [...tickerData, ...tickerData];
-inner.innerHTML = doubled.map(t => `<span>${t}</span>`).join('');
-
-// ── SCROLL REVEAL ──
-const chapters = document.querySelectorAll('.chapter');
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-chapters.forEach(c => revealObs.observe(c));
-
-// ── FINALE LINES ──
-const fLines = document.querySelectorAll('.finale-lines p');
-const fEn = document.querySelector('.finale-en');
-const fObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      fLines.forEach((p, i) => setTimeout(() => p.classList.add('visible'), i * 350));
-      setTimeout(() => fEn.classList.add('visible'), fLines.length * 350 + 300);
-    }
-  });
-}, { threshold: 0.15 });
-const fl = document.querySelector('.finale-lines');
-if (fl) fObs.observe(fl);
-</script>
-</body>
-</html>
+    <section id="definition">
+      <div class="section-head"><h2>Core Definition<br><span class="cyan">核心定义</span></h2><p>RDT is the relation branch of the New World Model: it changes how error is located before repair begins.</p></div>
+      <div class="card"><div class="inner split">
+        <div><p class="lead"><strong>Relational Dislocation Theory</strong> studies situations where two or more components may each be locally functional, yet fail together because their relation, interface, timing, or verification protocol is misaligned.</p><p>Its core move is not to excuse failure, but to relocate diagnosis: before blaming A, blaming B, or replacing either side, RDT asks where the relation has lost synchronization.</p></div>
+        <div><p class="lead cn"><strong>关系位错论</strong>研究的是
